@@ -103,24 +103,27 @@ class AuIt_PublicationBasic_ContentController extends Mage_Core_Controller_Front
     		if ( $model->getId() )
     		{
     			$pid = $this->getRequest()->getParam('pid');
+    			$customer = $this->getRequest()->getParam('customer');
     			$store= $this->getRequest()->getParam('store');
     			$obj = Mage::helper('auit_publicationbasic')->cleanLayoutData($model->getData('data'));
 				if ( !$pid )    			
 					$pid=$obj['preview_sku'];
+				if ( !$customer )    			
+					$customer=$obj['preview_customer'];
 				if ( !$store )
 					$store=$obj['preview_store'];
 				$type= $model->getType();
 				
     			$data['data']=$obj;
-    			$data['productData']=Mage::helper('auit_publicationbasic')->getPreviewData($pid,$type,$store);
+    			$data['productData']=Mage::helper('auit_publicationbasic')->getPreviewData($pid,$type,$store,$customer);
     			$data = Mage::helper('core')->jsonEncode($data);    			 
     		}
     	}else {
     		// GRoup produkt daten anfordern
     		$pid = $this->getRequest()->getParam('pid');
     		$store= $this->getRequest()->getParam('store');
-    		
-    		$data['productData']=Mage::helper('auit_publicationbasic')->getPreviewData($pid,AuIt_PublicationBasic_Helper_Data::TEMPLATE_PRODUCT,$store);
+    		$customer = $this->getRequest()->getParam('customer');
+    		$data['productData']=Mage::helper('auit_publicationbasic')->getPreviewData($pid,AuIt_PublicationBasic_Helper_Data::TEMPLATE_PRODUCT,$store,$customer);
     		$data = Mage::helper('core')->jsonEncode($data);
     	}
     	if ( !$data )$data=Zend_Json::encode(array());
@@ -233,10 +236,13 @@ class AuIt_PublicationBasic_ContentController extends Mage_Core_Controller_Front
     		return;
     	}
     	$store = $this->getRequest()->getParam('store');
+    	$customer = $this->getRequest()->getParam('customer');
 		if ( $sku = $this->getRequest()->getParam('sku') )
     	{
     		if ( $type = $this->getRequest()->getParam('type') )
-	    		$data = Mage::helper('auit_publicationbasic')->getPreviewData($sku,$type,$store);
+    		{
+	    		$data = Mage::helper('auit_publicationbasic')->getPreviewData($sku,$type,$store,$customer);
+    		}
 		}
     	$this->getResponse()->setHeader('Content-type', 'application/json; charset=UTF-8');
     	$this->getResponse()->setBody(Zend_Json::encode($data));

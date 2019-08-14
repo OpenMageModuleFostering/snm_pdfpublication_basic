@@ -54,7 +54,9 @@ class AuIt_PublicationBasic_Helper_Data extends Mage_Core_Helper_Abstract
 			$obj['preview_sku']='';
 		if ( !isset($obj['preview_store']) )
 			$obj['preview_store']=0;
-			
+		if ( !isset($obj['preview_customer']) )
+			$obj['preview_customer']=0;
+		
 		if ( isset($obj['showCurrentSpread']) )
 			unset($obj['showCurrentSpread']);
 		return $obj;
@@ -204,7 +206,21 @@ class AuIt_PublicationBasic_Helper_Data extends Mage_Core_Helper_Abstract
 		}
 		return $sid;
 	}
-	public function getPreviewDataFromStore($sku,$type,$storeId=0)
+	public function setCatalogCustomer($customerId){
+		//Mage::log("setCatalogCustomer($customerId)");
+		if ( $customerId )
+		{
+			$customer = Mage::getModel('customer/customer')->load($customerId);
+			if ( $customer->getId() )
+			{
+				Mage::getSingleton('customer/session')->setId($customerId);
+				//Mage::getSingleton('customer/session')->setCustomer($customer);
+				return;
+			}
+		}
+		Mage::getSingleton('customer/session')->setId(0);
+	}
+	public function getPreviewDataFromStore($sku,$type,$storeId=0,$customerId=0)
 	{
 		$lsku = $sku;
 		$lstoreId = $storeId;
@@ -215,6 +231,16 @@ class AuIt_PublicationBasic_Helper_Data extends Mage_Core_Helper_Abstract
 		$initialEnvironmentInfo = $appEmulation->startEnvironmentEmulation($storeId);
 		$data=$this->getObjectData($sku,$type,$storeId);
 		$data = array_shift($data);
+		
+		$this->setCatalogCustomer($customerId);
+		/*
+		$locale = Mage::app()->getLocale();
+		$format = $locale->getDateFormat(Mage_Core_Model_Locale::FORMAT_TYPE_SHORT);
+		$data['_DATE_'.Mage_Core_Model_Locale::FORMAT_TYPE_FULL]= $locale->getDateFormat(Mage_Core_Model_Locale::FORMAT_TYPE_FULL);
+		$data['_DATE_'.Mage_Core_Model_Locale::FORMAT_TYPE_LONG]= $locale->getDateFormat(Mage_Core_Model_Locale::FORMAT_TYPE_LONG);
+		$data['_DATE_'.Mage_Core_Model_Locale::FORMAT_TYPE_MEDIUM]= $locale->getDateFormat(Mage_Core_Model_Locale::FORMAT_TYPE_MEDIUM);
+		$data['_DATE_'.Mage_Core_Model_Locale::FORMAT_TYPE_SHORT]= $locale->getDateFormat(Mage_Core_Model_Locale::FORMAT_TYPE_SHORT);
+*/
 		// Stop store emulation process
 		$appEmulation->stopEnvironmentEmulation($initialEnvironmentInfo);
 		// BUG translation from modulcodes
@@ -223,15 +249,17 @@ class AuIt_PublicationBasic_Helper_Data extends Mage_Core_Helper_Abstract
 		
 		$data['preview_sku']=$lsku;
 		$data['preview_store']=$lstoreId;
-		
+		$data['preview_customer']=$customerId;
 		return $data;
 	}
-	public function getPreviewData($sku,$type)
+	public function getPreviewData($sku,$type,$storeDummy,$customerId=0)
 	{
 		$lsku = $sku;
 		$lstoreId = Mage::app()->getStore()->getName();
 		if ( !$sku )
 			return array();
+		$this->setCatalogCustomer($customerId);
+		
 //		$storeId = $this->_getStoreId($storeId);
 	//	$appEmulation = Mage::getSingleton('core/app_emulation');
 		//$initialEnvironmentInfo = $appEmulation->startEnvironmentEmulation($storeId);
@@ -243,10 +271,17 @@ class AuIt_PublicationBasic_Helper_Data extends Mage_Core_Helper_Abstract
 		// BUG translation from modulcodes
 		//$initialDesign = $initialEnvironmentInfo->getInitialDesign();
 		//Mage::getSingleton('core/translate')->init($initialDesign['area'], false);
-		
+		/*
+		$locale = Mage::app()->getLocale();
+		$format = $locale->getDateFormat(Mage_Core_Model_Locale::FORMAT_TYPE_SHORT);
+		$data['_DATE_'.Mage_Core_Model_Locale::FORMAT_TYPE_FULL]= $locale->getDateFormat(Mage_Core_Model_Locale::FORMAT_TYPE_FULL);
+		$data['_DATE_'.Mage_Core_Model_Locale::FORMAT_TYPE_LONG]= $locale->getDateFormat(Mage_Core_Model_Locale::FORMAT_TYPE_LONG);
+		$data['_DATE_'.Mage_Core_Model_Locale::FORMAT_TYPE_MEDIUM]= $locale->getDateFormat(Mage_Core_Model_Locale::FORMAT_TYPE_MEDIUM);
+		$data['_DATE_'.Mage_Core_Model_Locale::FORMAT_TYPE_SHORT]= $locale->getDateFormat(Mage_Core_Model_Locale::FORMAT_TYPE_SHORT);
+		*/
 		$data['preview_sku']=$lsku;
 		$data['preview_store']=$lstoreId;
-		
+		$data['preview_customer']=$customerId;
 		return $data;
 	}
 	public function getStaticBlockHTML($identifier,$storeId=0)
@@ -366,6 +401,13 @@ class AuIt_PublicationBasic_Helper_Data extends Mage_Core_Helper_Abstract
 					$value = $product->getData($attribute->getAttributeCode());
 					if (  $attribute->getIsHtmlAllowedOnFront()) {
 						$value = $this->_getTemplateProcessor()->filter($value);
+					}
+					if ( $attribute->getFrontendInput() == 'date')
+					{
+						$data[$attribute->getAttributeCode().'_'.Mage_Core_Model_Locale::FORMAT_TYPE_FULL]= ''.Mage::helper('core')->formatDate($value, Mage_Core_Model_Locale::FORMAT_TYPE_FULL);
+						$data[$attribute->getAttributeCode().'_'.Mage_Core_Model_Locale::FORMAT_TYPE_LONG]= ''.Mage::helper('core')->formatDate($value, Mage_Core_Model_Locale::FORMAT_TYPE_LONG);
+						$data[$attribute->getAttributeCode().'_'.Mage_Core_Model_Locale::FORMAT_TYPE_MEDIUM]= ''.Mage::helper('core')->formatDate($value, Mage_Core_Model_Locale::FORMAT_TYPE_MEDIUM);
+						$data[$attribute->getAttributeCode().'_'.Mage_Core_Model_Locale::FORMAT_TYPE_SHORT]= ''.Mage::helper('core')->formatDate($value, Mage_Core_Model_Locale::FORMAT_TYPE_SHORT);
 					}
 				}
 				$data[$attribute->getAttributeCode()]=$value;
@@ -686,7 +728,7 @@ class AuIt_PublicationBasic_Helper_Data extends Mage_Core_Helper_Abstract
 	{
 		$hash=array();
 		//$allowedAttributes=array('date','price','boolean','text','textarea','select','multiselect','media_image');
-		$allowedAttributes=array('boolean','select','multiselect','text','textarea');
+		$allowedAttributes=array('boolean','select','multiselect','text','textarea','weight','price','date');
 		//$allowedAttributes=array('text','textarea');
 		$collection = Mage::getResourceModel('catalog/product_attribute_collection')
 		->addVisibleFilter();
@@ -783,6 +825,23 @@ class AuIt_PublicationBasic_Helper_Data extends Mage_Core_Helper_Abstract
 			$_options['_price_currency_code'] = $this->__('Currency Code');
 			$_options['_price_currency_symbol'] = $this->__('Currency Symbol');
 			//$_options['special'] = $this->__('Special Price');
+		}
+		return $_options;
+	}
+	
+	public function getAttributeFormats()
+	{
+		static $_options;
+		if (!$_options) {
+			$_options = array();
+			$_options['-'] = $this->__('Default');
+			$_options['AL.digits(value)'] = $this->__('Number');
+			$_options['AL.printf(value,\'%0.1f\')'] = $this->__('.0');
+			$_options['AL.printf(value,\'%0.2f\')'] = $this->__('.00');
+			$_options['AL.date(ac,value,\''.Mage_Core_Model_Locale::FORMAT_TYPE_FULL.'\')'] = $this->__('Date Full');
+			$_options['AL.date(ac,value,\''.Mage_Core_Model_Locale::FORMAT_TYPE_LONG.'\')'] = $this->__('Date Long');
+			$_options['AL.date(ac,value,\''.Mage_Core_Model_Locale::FORMAT_TYPE_MEDIUM.'\')'] = $this->__('Date Medium');
+			$_options['AL.date(ac,value,\''.Mage_Core_Model_Locale::FORMAT_TYPE_SHORT.'\')'] = $this->__('Date Short');
 		}
 		return $_options;
 	}

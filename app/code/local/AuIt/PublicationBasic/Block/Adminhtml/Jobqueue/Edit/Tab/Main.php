@@ -79,6 +79,13 @@ class AuIt_PublicationBasic_Block_Adminhtml_Jobqueue_Edit_Tab_Main
         }        
         elseif ( $model->getVariante() == AuIt_PublicationBasic_Model_Jobqueue::TYPE_BROCHURE_LIST )
         {
+        	$fieldset->addField('print_customer', 'text', array(
+        			'label'     => Mage::helper('auit_publicationbasic')->__('Use CustomerID'),
+        			'title'     => Mage::helper('auit_publicationbasic')->__('Use CustomerID'),
+        			'name'      => 'print_customer',
+        			'required'  => false
+        	));
+        	 
         	/*
 	        $fieldset->addField('template', 'select', array(
 	        		'label'     => Mage::helper('auit_publicationbasic')->__('Template'),

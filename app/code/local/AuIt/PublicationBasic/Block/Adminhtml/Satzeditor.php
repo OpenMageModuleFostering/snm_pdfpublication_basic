@@ -61,16 +61,6 @@ class AuIt_PublicationBasic_Block_Adminhtml_Satzeditor extends Mage_Adminhtml_Bl
 		
 		return Mage::helper('core')->jsonEncode($this->getObj());
 	}
-	/**
-	public  function getJsonProductData()
-	{
-		$obj = $this->getObj();
-		$type=AuIt_PublicationBasic_Helper_Data::TEMPLATE_UNKNOWN;
-		if ( $obj && isset($obj['object']) && isset($obj['object']['type']))
-			$type=$obj['object']['type'];
-		return Mage::helper('core')->jsonEncode(Mage::helper('auit_publicationbasic')->getPreviewDataFromStore($obj['preview_sku'],$type,$obj['preview_store']));
-	}
-	*/
 	public  function getJsonModel()
 	{
 		return '';//Mage::helper('core')->jsonEncode($this->getObj());

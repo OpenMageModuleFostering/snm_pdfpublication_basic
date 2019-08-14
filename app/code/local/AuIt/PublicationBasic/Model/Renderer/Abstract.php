@@ -120,6 +120,12 @@ class AuIt_PublicationBasic_Model_Renderer_Abstract extends Varien_Object
 		{
 			
 		}
+		$customerId = 0;
+		if ( isset($data['preview_customer']) )
+			$customerId = $data['preview_customer'];
+		if ( $jobQueue && $jobQueue->getPrintCustomer() )
+			$customerId =$jobQueue->getPrintCustomer();
+		Mage::helper('auit_publicationbasic')->setCatalogCustomer($customerId);
 
 		$this->_Style = Mage::getModel('auit_publicationbasic/styles');
 		if ( $jobQueue && $jobQueue->getJobStyle() )

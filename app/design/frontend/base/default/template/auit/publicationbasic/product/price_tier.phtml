@@ -1,0 +1,6 @@
+<?php 
+	$_product = $this->getProduct();
+	$block = Mage::getSingleton('core/layout')->createBlock('catalog/product_price');
+	$block->setProduct($_product);
+	echo $block->getTierPriceHtml(); 
+?>

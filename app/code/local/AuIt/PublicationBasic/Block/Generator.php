@@ -182,6 +182,9 @@ class AuIt_PublicationBasic_Block_Generator extends Mage_Catalog_Block_Product_V
 	{
 		extract ($this->_viewVars, EXTR_SKIP);
 		ob_start();
+		
+		$oldcwd = getcwd();
+		chdir ( Mage::getBaseDir() );
 		$html ='';
 		try {
 			eval('?>'.$this->getGenerator()->getSource());
@@ -191,6 +194,7 @@ class AuIt_PublicationBasic_Block_Generator extends Mage_Catalog_Block_Product_V
 			$html = 'Exception:'.$e->getMessage();
 //			throw $e;
 		}
+		chdir ($oldcwd );
 		
 		return $html;
 	}

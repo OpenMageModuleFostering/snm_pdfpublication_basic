@@ -9,7 +9,7 @@ class AuIt_PublicationBasic_Model_Resource_Jobqueue extends AuIt_PublicationBasi
     }
     public function getBlobFields()
     {
-    	return array('salesrule_rule','template','template2','use_doc_size','user_page_size','user_page_orientation','placment_method','use_bleed','catalog_skus','print_store','layout_def');
+    	return array('salesrule_rule','template','template2','use_doc_size','user_page_size','user_page_orientation','placment_method','use_bleed','catalog_skus','print_store','print_customer','layout_def');
     }
     public function getJobRoot()
     {

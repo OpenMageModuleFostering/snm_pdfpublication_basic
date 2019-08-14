@@ -227,6 +227,8 @@ abstract class AuIt_PublicationBasic_Model_Pdf_Base extends Varien_Object //Mage
     			$storeId = $data['preview_store'];
     		if ( !$storeId )
     			$storeId ='default';
+    		Mage::helper->setCatalogCustomer($data['preview_customer']);
+    		
     		try {
     			$sender->emulateDesign($storeId);
     		}
