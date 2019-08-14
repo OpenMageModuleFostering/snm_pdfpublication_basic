@@ -340,12 +340,13 @@ class AuIt_PublicationBasic_Model_Renderer_Abstract extends Varien_Object
 			$this->endRenderTemplate($blockInfo);
 		}
 	}
-	protected function format($value,$fkt)
+	protected function format($value,$fkt,$ac='')
 	{
 		if ( $fkt == 'AL.digits(value)' )
 		{
 			return (int)$value;
-		}else if ( $fkt == 'AL.decimals(value,2)' )
+		}
+		else if ( $fkt == 'AL.decimals(value,2)' )
 		{
 			$dec = 2;
 			if ( !$dec ) $dec=2;
@@ -362,6 +363,27 @@ class AuIt_PublicationBasic_Model_Renderer_Abstract extends Varien_Object
 			}
 			return '00';
 		}
+		else if ( strpos($fkt,'AL.printf') !== false )
+		{
+			if ( preg_match('/\'(.*)\'/',$fkt,$result) )
+			{
+				return sprintf($result[1],$value);
+			}
+		}
+		else if ( strpos($fkt,'AL.date') !== false )
+		{
+			foreach ( array(
+					Mage_Core_Model_Locale::FORMAT_TYPE_FULL,
+					Mage_Core_Model_Locale::FORMAT_TYPE_LONG,
+					Mage_Core_Model_Locale::FORMAT_TYPE_MEDIUM,
+					Mage_Core_Model_Locale::FORMAT_TYPE_SHORT) as $dateFormat )
+			{
+				if ( strpos($fkt,"'".$dateFormat."'") !== false )
+				{
+					return  ''.$this->getAttribute($ac.'_'.$dateFormat);
+				}
+			}
+		}
 		return $value;
 	}
 	protected function getBoxText($blockInfo)
@@ -369,7 +391,12 @@ class AuIt_PublicationBasic_Model_Renderer_Abstract extends Varien_Object
 		switch ( $blockInfo->getType() )
 		{
 			case 'p_attr':
-				return $this->getAttribute($blockInfo->getPOpt());
+				$txt  =  $this->getAttribute($blockInfo->getPOpt());
+				if ( $blockInfo->getPOpt2())
+				{
+					$txt  = $this->format($txt,$blockInfo->getPOpt2(),$blockInfo->getPOpt());
+				}
+				return $txt;
 				break;
 			case 'p_price':
 				$txt  =  $this->getAttribute($blockInfo->getPOpt());

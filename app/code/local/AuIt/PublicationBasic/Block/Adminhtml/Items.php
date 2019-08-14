@@ -41,7 +41,7 @@ class AuIt_PublicationBasic_Block_Adminhtml_Items extends Mage_Adminhtml_Block_S
 	protected function _getProductAttributes()
     {
     	$hash=array();
-        $allowedAttributes=array('date','price','boolean','text','textarea','select','multiselect','media_image');
+        $allowedAttributes=array('weight','date','price','boolean','text','textarea','select','multiselect','media_image');
     	$collection = Mage::getResourceModel('catalog/product_attribute_collection')
             ->addVisibleFilter();
         $hashOpt=array();

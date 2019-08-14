@@ -6,7 +6,7 @@ class AuIt_PublicationBasic_Model_Adminhtml_System_Config_Product_Attribute
     {
     	$hash=array();
         //$allowedAttributes=array('date','price','boolean','text','textarea','select','multiselect','media_image');
-        $allowedAttributes=array('boolean','select','multiselect','text','textarea');
+        $allowedAttributes=array('boolean','select','multiselect','text','textarea','weight','price','date');
         $collection = Mage::getResourceModel('catalog/product_attribute_collection')
             ->addVisibleFilter();
         $hashOpt=array();

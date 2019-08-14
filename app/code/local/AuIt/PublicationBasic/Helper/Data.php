@@ -404,12 +404,16 @@ class AuIt_PublicationBasic_Helper_Data extends Mage_Core_Helper_Abstract
 					}
 					if ( $attribute->getFrontendInput() == 'date')
 					{
-						$data[$attribute->getAttributeCode().'_'.Mage_Core_Model_Locale::FORMAT_TYPE_FULL]= ''.Mage::helper('core')->formatDate($value, Mage_Core_Model_Locale::FORMAT_TYPE_FULL);
-						$data[$attribute->getAttributeCode().'_'.Mage_Core_Model_Locale::FORMAT_TYPE_LONG]= ''.Mage::helper('core')->formatDate($value, Mage_Core_Model_Locale::FORMAT_TYPE_LONG);
-						$data[$attribute->getAttributeCode().'_'.Mage_Core_Model_Locale::FORMAT_TYPE_MEDIUM]= ''.Mage::helper('core')->formatDate($value, Mage_Core_Model_Locale::FORMAT_TYPE_MEDIUM);
-						$data[$attribute->getAttributeCode().'_'.Mage_Core_Model_Locale::FORMAT_TYPE_SHORT]= ''.Mage::helper('core')->formatDate($value, Mage_Core_Model_Locale::FORMAT_TYPE_SHORT);
+						if ( $value )
+						{
+							$data[$attribute->getAttributeCode().'_'.Mage_Core_Model_Locale::FORMAT_TYPE_FULL]= ''.Mage::helper('core')->formatDate($value, Mage_Core_Model_Locale::FORMAT_TYPE_FULL);
+							$data[$attribute->getAttributeCode().'_'.Mage_Core_Model_Locale::FORMAT_TYPE_LONG]= ''.Mage::helper('core')->formatDate($value, Mage_Core_Model_Locale::FORMAT_TYPE_LONG);
+							$data[$attribute->getAttributeCode().'_'.Mage_Core_Model_Locale::FORMAT_TYPE_MEDIUM]= ''.Mage::helper('core')->formatDate($value, Mage_Core_Model_Locale::FORMAT_TYPE_MEDIUM);
+							$data[$attribute->getAttributeCode().'_'.Mage_Core_Model_Locale::FORMAT_TYPE_SHORT]= ''.Mage::helper('core')->formatDate($value, Mage_Core_Model_Locale::FORMAT_TYPE_SHORT);
+						}
 					}
 				}
+				if ( is_null($value)) $value='';
 				$data[$attribute->getAttributeCode()]=$value;
 			}
 			$attributes = $product->getMediaAttributes();
