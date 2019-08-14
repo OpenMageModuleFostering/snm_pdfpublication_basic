@@ -1,0 +1,45 @@
+#auit-layout-frame .auit-layout-text-frame {
+	padding:0;margin:0;	
+	font-size:12pt;	line-height: 1.25;	font-weight: normal;	font-style: normal;	color:black;    word-wrap: break-word;
+	color:black;
+}
+#auit-layout-frame table,
+#auit-layout-frame th,
+#auit-layout-frame td
+{
+	padding:0;margin:0;
+}
+#auit-layout-frame th, #auit-layout-frame td{text-align: left;vertical-align: top;}
+/*.auit-layout-text-frame div */
+.abox {word-spacing: 0.1em;}
+.abox p,.abox h1,.abox h2,.abox h3,.abox h4,.abox h5,.abox h6
+{
+	margin:inherit;	padding:inherit;	font-size: inherit;	font-weight: inherit;	line-height: inherit;color:inherit;
+}
+
+
+.auit-layout-pdf-box p,.auit-layout-pdf-box h1,.auit-layout-pdf-box h2,.auit-layout-pdf-box h3,.auit-layout-pdf-box h4,.auit-layout-pdf-box h5,
+.auit-layout-pdf-box h6
+{
+	/*margin:inherit;	padding:inherit;	font-size: 8pt;	font-weight: inherit;	line-height: 8pt;color:inherit;*/
+}
+
+#auit-layout-frame .box-align-left {text-align:left !important; }
+#auit-layout-frame .box-align-right {text-align:right !important;}
+#auit-layout-frame .box-align-center {text-align:center !important;}
+#auit-layout-frame .box-align-justify {text-align:justify !important;}
+
+#auit-layout-frame .box-valign-M.box-table-frame,
+#auit-layout-frame .box-valign-B.box-table-frame{display: table;height:100%;width:100%;}
+#auit-layout-frame .box-valign-B .box-valign {display: table-cell; vertical-align: bottom;}
+#auit-layout-frame .box-valign-M .box-valign {display: table-cell; vertical-align: middle;}
+
+
+#auit-layout-frame .auit-layout-text-frame ul {
+	list-style:disc;
+	margin:0 0em 0 1.5em;
+}
+#auit-layout-frame .auit-layout-text-frame ol {
+   list-style:decimal;
+   margin:0 0em 0 1.5em;
+}

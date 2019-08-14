@@ -1,0 +1,16 @@
+{
+    "name": "OpenMageModuleFostering/snm_pdfpublication_basic",
+    "type": "magento-module",
+    "license": "see-snm-portal.com",
+    "homepage": "",
+    "description": "",
+    "authors": [
+    {
+        "name": "snm-portal",
+        "email": "develop@snm-portal.com"
+    }
+],
+    "suggest": {
+        "magento-hackathon/magento-composer-installer": "*"
+    }
+}

@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<layout >
+    <catalog_product_view translate="label">
+    	<reference name="alert.urls">
+			<block type="auit_publicationbasic/product_buttons" template="auit/publicationbasic/product/buttons.phtml" ifconfig="auit_publicationbasic/product_pdf/enabled">
+			</block>
+		</reference>
+	</catalog_product_view>
+</layout>

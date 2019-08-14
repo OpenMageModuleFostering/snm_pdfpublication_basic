@@ -1,0 +1,151 @@
+<?xml version="1.0"?>
+<layout>
+    <auit_publicationbasic_admin_templates_index>
+        <reference name="content">
+            <block type="auit_publicationbasic/adminhtml_templates" name="text_block"></block>
+        </reference>
+    </auit_publicationbasic_admin_templates_index>
+
+    <auit_publicationbasic_admin_templates_new>
+        <reference name="left">
+            <block type="auit_publicationbasic/adminhtml_templates_edit_tabs" name="templates_edit_tabs" />
+        </reference>
+        <reference name="content">
+            <block type="auit_publicationbasic/adminhtml_templates_edit" name="templates_edit_content"/>
+        </reference>
+    </auit_publicationbasic_admin_templates_new>
+
+    <auit_publicationbasic_js_main>
+    	<reference name="head">
+	        <action method="addJs"><script>auit/publicationbasic/jquery/jquery-1.9.0.min.js</script></action>
+	        <action method="addJs"><script>auit/publicationbasic/jquery/jquery-noconflict.js</script></action>
+	        <action method="addJs"><script>auit/publicationbasic/jquery/jquery.mousewheel.js</script></action>
+			<action method="addItem"><type>js_css</type><name>auit/publicationbasic/jquery/css/smoothness/jquery-ui-1.10.0.custom.min.css</name></action>
+    	    <action method="addJs"><script>auit/publicationbasic/jquery/jquery-ui-1.10.0.custom.min.js</script></action>
+    	    <action method="addJs"><script>auit/publicationbasic/jquery/jquery-ui-combobox.js</script></action>
+			<action method="addJs"><script>auit/publicationbasic/knockout/knockout-3.1.0.js</script></action>
+			<action method="addJs"><script>auit/publicationbasic/knockout/knockout-sortable.js</script></action>
+			<action method="addJs"><script>auit/publicationbasic/knockout/knockout.mapping.js</script></action>
+			<action method="addJs"><script>auit/publicationbasic/knockout/knockout-jquery-ui-widget.js</script></action>
+			<action method="addJs"><script>auit/publicationbasic/publication/validate.js</script></action>
+			<action method="addItem"><type>js_css</type><name>auit/publicationbasic/css/basic.css</name></action>
+    	</reference>
+    </auit_publicationbasic_js_main>
+    <auit_publicationbasic_js_filetree>
+    	<reference name="head">
+   	    	<action method="addJs"><script>auit/publicationbasic/filetree/jquery.jstree.js</script></action>
+			<action method="addJs"><script>auit/publicationbasic/publication/filemanager.js</script></action>
+   	    	<action method="addItem"><type>js_css</type><name>auit/publicationbasic/filetree/themes/default/style.css</name></action>
+			<action method="addItem"><type>js_css</type><name>auit/publicationbasic/css/filemanager.css</name></action>
+   	    </reference>
+	</auit_publicationbasic_js_filetree>
+
+	<!--  **********  -->
+    <auit_publicationbasic_admin_projects_index>
+        <reference name="content">
+            <block type="auit_publicationbasic/adminhtml_projects" name="text_block"></block>
+        </reference>
+    </auit_publicationbasic_admin_projects_index>
+
+    <auit_publicationbasic_admin_projects_new>
+        <reference name="left">
+            <block type="auit_publicationbasic/adminhtml_projects_edit_tabs" name="projects_edit_tabs" />
+        </reference>
+        <reference name="content">
+            <block type="auit_publicationbasic/adminhtml_projects_edit" name="projects_edit_content"/>
+        </reference>
+    </auit_publicationbasic_admin_projects_new>
+
+    <auit_publicationbasic_admin_projects_edit>
+    	<update handle="auit_publicationbasic_js_publication"/>
+        <reference name="content">
+            <block type="auit_publicationbasic/adminhtml_projects_edit" name="projects_edit_content"/>
+        </reference>
+        <reference name="left">
+        	<block type="auit_publicationbasic/adminhtml_projects_edit_tabs" name="projects_edit_tabs" >
+
+                <block type="auit_publicationbasic/adminhtml_projects_edit_tab_layout" name="auit_publicationbasic_projects_edit_tab_layout" />
+                <action method="addTab"><name>layout_section</name><block>auit_publicationbasic_projects_edit_tab_layout</block></action>
+
+                <block type="auit_publicationbasic/adminhtml_projects_edit_tab_main" name="auit_publicationbasic_projects_edit_tab_main" />
+                <action method="addTab"><name>main_section</name><block>auit_publicationbasic_projects_edit_tab_main</block></action>
+            </block>
+        </reference>
+    </auit_publicationbasic_admin_projects_edit>
+
+
+	<!--  **********  -->
+    <auit_publicationbasic_admin_jobqueue_index>
+    
+        <reference name="content">
+            <block type="auit_publicationbasic/adminhtml_jobqueue" name="text_block"></block>
+        </reference>
+    </auit_publicationbasic_admin_jobqueue_index>
+
+    <auit_publicationbasic_admin_jobqueue_new>
+    </auit_publicationbasic_admin_jobqueue_new>
+
+    <auit_publicationbasic_admin_jobqueue_newpromo>
+        <reference name="left">
+            <block type="auit_publicationbasic/adminhtml_jobqueue_edit_tabs" name="jobqueue_edit_tabs" />
+        </reference>
+        <reference name="content">
+            <block type="auit_publicationbasic/adminhtml_jobqueue_edit" name="jobqueue_edit_content"/>
+        </reference>
+    </auit_publicationbasic_admin_jobqueue_newpromo>
+
+    <auit_publicationbasic_admin_jobqueue_edit>
+   		
+   		<update handle="auit_publicationbasic_js_main"/>
+    	<update handle="auit_publicationbasic_js_filetree"/>
+    	<reference name="head">
+    		<action method="addJs"><script>auit/publicationbasic/publication/satzeditor.js</script></action>
+    		<action method="addItem"><type>js_css</type><name>auit/publicationbasic/css/satzeditor.css</name></action>
+        </reference>
+        <reference name="content">
+            <block type="auit_publicationbasic/adminhtml_jobqueue_edit" name="jobqueue_edit_content"/>
+        </reference>
+        <reference name="left">
+        	<block type="auit_publicationbasic/adminhtml_jobqueue_edit_tabs" name="jobqueue_edit_tabs" >
+
+                <block type="auit_publicationbasic/adminhtml_jobqueue_edit_tab_main" name="auit_publicationbasic_jobqueue_edit_tab_main" />
+                <action method="addTab"><name>main_section</name><block>auit_publicationbasic_jobqueue_edit_tab_main</block></action>
+
+                <block type="auit_publicationbasic/adminhtml_jobqueue_edit_tab_products" name="auit_publicationbasic_jobqueue_edit_tab_products" />
+                <action method="addTab"><name>products_section</name><block>auit_publicationbasic_jobqueue_edit_tab_products</block></action>
+
+                <block type="auit_publicationbasic/adminhtml_jobqueue_edit_tab_queue" name="auit_publicationbasic_jobqueue_edit_tab_queue" />
+                <action method="addTab"><name>queue_section</name><block>auit_publicationbasic_jobqueue_edit_tab_queue</block></action>
+
+                <block type="auit_publicationbasic/adminhtml_jobqueue_edit_tab_epub3" name="auit_publicationbasic_jobqueue_edit_tab_epub3" />
+                <action method="addTab"><name>epub3_section</name><block>auit_publicationbasic_jobqueue_edit_tab_epub3</block></action>
+
+                <block type="auit_publicationbasic/adminhtml_jobqueue_edit_tab_print" name="auit_publicationbasic_jobqueue_edit_tab_print" />
+                <action method="addTab"><name>print_section</name><block>auit_publicationbasic_jobqueue_edit_tab_print</block></action>
+                
+            </block>
+        </reference>
+
+    </auit_publicationbasic_admin_jobqueue_edit>
+
+
+    <auit_publicationbasic_admin_import_index>
+        <reference name="content">
+            <block type="adminhtml/template" template="auit/publicationbasic/admin/import/form/before.phtml" name="import.form.before" alias="form_before"/>
+            <block type="auit_publicationbasic/adminhtml_import_edit" name="import.form.container"/>
+            <block type="adminhtml/template" template="auit/publicationbasic/admin/import/form/after.phtml" name="import.form.after" alias="form_after"/>
+        </reference>
+    </auit_publicationbasic_admin_import_index>
+    <auit_publicationbasic_admin_import_validate>
+        <block type="auit_publicationbasic/adminhtml_import_frame_result" template="auit/publicationbasic/admin/import/frame/result.phtml" name="import.frame.result" alias="import_frame_result" output="toHtml"/>
+    </auit_publicationbasic_admin_import_validate>
+    <auit_publicationbasic_admin_import_start>
+        <block type="auit_publicationbasic/adminhtml_import_frame_result" template="auit/publicationbasic/admin/import/frame/result.phtml" name="import.frame.result" alias="import_frame_result" output="toHtml"/>
+    </auit_publicationbasic_admin_import_start>
+    <auit_publicationbasic_admin_import_busy>
+        <reference name="content">
+            <block type="core/template" template="importexport/busy.phtml" name="busy" alias="busy"/>
+        </reference>
+    </auit_publicationbasic_admin_import_busy>
+
+</layout>

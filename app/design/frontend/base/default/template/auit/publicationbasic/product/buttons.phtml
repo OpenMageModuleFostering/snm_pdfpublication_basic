@@ -1,0 +1,18 @@
+<?php if ( Mage::getStoreConfigFlag('auit_publicationbasic/product_pdf/enabled') ) :?>
+<?php if ( $url = Mage::helper('auit_publicationbasic/pdf')->getDataSheetUrl($this->getProduct())) :?>
+<div style="padding:5px:font-size:8px;">
+	<div style="float:left;margin-right:5px;">
+	<a href="<?php echo $url?>" ><img src="http://www.adobe.com/images/pdficon_large.png" alt="PDF"/></a>
+	<br/>Datasheet I</div>
+	<?php /*?>
+	<?php if ( $url = Mage::helper('auit_publicationbasic/pdf')->getDataSheetUrl($this->getProduct(),array('tuid'=>'e2773e5570e8762775d0471087871d68'))) :?>
+	 
+	<div style="float:left">
+	<a href="<?php echo $url?>" ><img src="http://www.adobe.com/images/pdficon_large.png" alt="PDF"/></a>
+	<br/>Datasheet II</div>
+	<?php endif;?>
+	 */?>
+	<div class="clearer"></div>
+</div>
+<?php endif;?>
+<?php endif;?>

@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<history>
+
+	<version>
+		<number>1.6.2.1</number>
+		<date>2014-05-19</date>
+		<channel>allPublication</channel>
+		<comment></comment>
+		<features><![CDATA[
+		Many Fixes
+		]]></features>
+		<fixes><![CDATA[]]></fixes>
+	</version>
+	<version>
+		<number>1.6.0.5</number>
+		<date>2013-01-01</date>
+		<channel>allPublication</channel>
+		<comment></comment>
+		<features><![CDATA[
+		Inital Version
+		]]></features>
+		<fixes><![CDATA[]]></fixes>
+	</version>
+</history>        

@@ -1,0 +1,85 @@
+<?php 
+	$_helper = $this->helper('catalog/output');
+	$_product = $this->getProduct();
+	$collection = $_product->getMediaGalleryImages();
+	$border	= $this->getGeneratorParameter('border',2);
+	$boxW 	= $this->getGeneratorParameter('width',50);
+	$boxH 	= $this->getGeneratorParameter('height',50);
+	$maxPictures=$this->getGeneratorParameter('max-pictures',2);
+	$bgColor = $this->getGeneratorParameter('bgcolor','rgba(0,0,0,0.2)');
+	$imgbgcolor = $this->getGeneratorParameter('imgbgcolor','rgba(255,255,255,1)');
+	$fillmode= $this->getGeneratorParameter('fillmode','fill2box');
+	if ( $fillmode != 'fit2box' && $fillmode != 'fill2box')
+		$fillmode = 'fill2box';
+	
+	$orientation 	= $this->getGeneratorParameter('orientation',0);
+	
+	$x=0;
+	$y=0;
+	if ($_product->getImage() != 'no_selection' && $_product->getImage()){
+		
+		$this->addBox(array(
+				'name'=>'Frame',
+				'type'=>'p_free',
+				'x'=>$x, 'y'=>$y, 'w'=>$boxW, 'h'=>$boxH,
+				'p_opt'=>'',
+				'style_colour_background'=>$bgColor
+		));
+		$this->addBox(array(
+				'name'=>'Image',
+				'x'=>$x+$border, 'y'=>$y+$border, 'w'=>$boxW-$border-$border, 'h'=>$boxH-$border-$border,
+				'type'=>'p_img',
+				'p_opt'=>'image',
+				'p_opt2'=>$fillmode,
+				'style_colour_background'=>$imgbgcolor,
+				//'src'=>'ROOT/samples/logo_h.png',
+				'scale'=>'100',
+				'xoff'=>'0',
+				'yoff'=>'0',
+		));
+		
+		if ( $orientation )
+		{
+			$x+=$boxW+$border;
+		}
+		else{
+			$y+=$boxH+$border;
+		}		
+		$maxPictures--;
+	}
+		
+	if (count($collection) > 0) 
+	{
+		$idx=1;
+	    foreach ($collection as $_image)
+	    {
+	    	if ( $maxPictures <= 0)break;
+			$this->addBox(array(
+					'name'=>'Frame',
+					'type'=>'p_free',
+					'x'=>$x, 'y'=>$y, 'w'=>$boxW, 'h'=>$boxH,
+					'p_opt'=>'',
+					'style_colour_background'=>$bgColor
+			));
+	    	$this->addBox(array(
+	    			'name'=>'Image:'.$idx,
+	    			'x'=>$x+$border, 'y'=>$y+$border, 'w'=>$boxW-$border-$border, 'h'=>$boxH-$border-$border,
+	    			'type'=>'p_img',
+	    			'p_opt'=>'image:'.$idx,
+	    			'p_opt2'=>$fillmode,
+	    			'style_colour_background'=>$imgbgcolor,
+	    			'scale'=>'100',
+	    			'xoff'=>'0',
+	    			'yoff'=>'0',
+	    	));
+	    	if ( $orientation )
+	    	{
+	    		$x+=$boxW+$border;
+	    	}
+    		else{
+    			$y+=$boxH+$border;
+    		} 
+	    	$idx++;
+	    	$maxPictures--;
+	    }
+	}

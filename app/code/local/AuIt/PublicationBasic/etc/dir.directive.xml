@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+	<target name="upload" description="run when a file upload in this directory" >
+		<!--
+		<mkdir dir="original"/>
+		<copy todir="original"/>
+		-->
+		<transform>
+			<resize width="90"
+					height="90"
+					keepAspectRatio="true" 
+					keepFrame="false"
+					backgroundColor="#FFFFFF"
+					keepTransparency="true"
+					constrainOnly="true"
+					/>
+			<!-- 
+			<rotate angle="45"/>
+			<crop top="0" bottom="0" right="0" left="0"/>
+			<watermark image="pfad" positionX="0" positionY="0" watermarkImageOpacity="30" repeat="false"/>
+			-->
+		</transform>
+	</target>
+</config>

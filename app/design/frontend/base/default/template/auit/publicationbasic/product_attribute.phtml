@@ -1,0 +1,21 @@
+<?php 
+$_helper = $this->helper('catalog/output');
+$_product = $this->getProduct()
+?>
+<?php if($_additional = $this->getAdditionalData()): ?>
+<?php 
+/*
+ * border="0" cellspacing="0" cellpadding="0"
+ */
+?>
+    <table style="width:100%" >
+        <tbody>
+        <?php $i=-1;foreach ($_additional as $_data): $i++;?>
+            <tr class="<?php echo $i % 2 == 0? 'odd':'even';?>" >
+                <th style="width:25%" class="label" ><?php echo $this->htmlEscape($this->__($_data['label'])) ?></th>
+                <td style="width:75%" class="data" ><?php echo trim($this->stripTags($_helper->productAttribute($_product, $_data['value'], $_data['code']),'<br/><br /><br>')) ?></td>
+            </tr>
+        <?php endforeach; ?>
+        </tbody>
+    </table>
+<?php endif;?>

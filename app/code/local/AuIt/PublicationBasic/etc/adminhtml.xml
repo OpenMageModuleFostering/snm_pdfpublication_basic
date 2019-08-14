@@ -1,0 +1,82 @@
+<?xml version="1.0"?>
+<config>
+    <menu>
+		<snm >
+            <title>SNM-Portal</title>
+            <sort_order>71</sort_order>
+			<children>
+				<auit_publicationbasic translate="title" module="auit_publicationbasic">
+					<title>pdfPublication Basic</title>
+				    <sort_order>5</sort_order>
+		            <children>
+						<promo translate="title" module="auit_publicationbasic">
+						    <title>Make Promotional Item</title>
+						    <sort_order>4</sort_order>
+						    <action>auit_publicationbasic/admin_jobqueue/newpromo</action>
+						</promo>
+
+						<import translate="title" module="auit_publicationbasic">
+						    <title>Template Import</title>
+						    <sort_order>7</sort_order>
+						    <action>auit_publicationbasic/admin_import</action>
+						</import>
+						<jobqueue translate="title" module="auit_publicationbasic">
+						    <title>Job Queue</title>
+						    <sort_order>10</sort_order>
+						    <action>auit_publicationbasic/admin_jobqueue</action>
+						</jobqueue>
+		            </children>
+				</auit_publicationbasic>
+            </children>
+        </snm>
+    </menu>
+    <acl>
+		<resources>
+			<admin>
+				<children>
+					<snm>
+                        <title>SNM-Portal</title>
+                        <sort_order>70</sort_order>
+						<children>
+							<auit_publicationbasic>
+								<title>SNM Publication</title>
+								<sort_order>40</sort_order>
+								<children>
+									<promo translate="title">
+										<title>Make Promotional Item</title>
+										<sort_order>11</sort_order>
+									</promo>
+									<import translate="title">
+										<title>Import Templates</title>
+										<sort_order>11</sort_order>
+									</import>
+									<jobqueue translate="title">
+										<title>Job Queue</title>
+										<sort_order>13</sort_order>
+									</jobqueue>
+								</children>
+							</auit_publicationbasic>
+						</children>
+					</snm>
+				</children>
+			</admin>
+		</resources>
+		<resources>
+			<admin>
+				<children>
+					<system>
+                           <children>
+                               <config>
+                                   <children>
+                                       <auit_publicationbasic>
+                                           <title>SNM Publication</title>
+                                       </auit_publicationbasic>
+                                   </children>
+                               </config>
+                           </children>
+                       </system>
+				</children>
+			</admin>
+		</resources>
+	</acl>
+</config>

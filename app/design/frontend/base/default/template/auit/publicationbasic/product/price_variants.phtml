@@ -1,0 +1,27 @@
+<?php 
+	$_helper = $this->helper('catalog/output');
+	$_product = $this->getProduct();
+	$options = $_product->getOptions();
+	$matrix = $this->getPriceMatrix();
+	/*
+	 * border="0" cellspacing="0" cellpadding="0"
+	 */
+?>
+<?php if ($matrix && is_array($matrix) ) :?>
+<table style="width:100%" >
+<tbody>
+<?php foreach ($matrix as $r => $variant ) :?>
+	<tr class="<?php echo ($r % 2) == 0? 'odd':'even';?>" >
+		<td style="text-align:left;width:70%">
+			<?php $i=0;foreach ($variant['attributes'] as $attribute => $variants ) :$i++?>
+				<?php if ( $i > 1 ) :?><br /><?php endif;?>
+				<span class="label"><?php echo $attribute;?><span>: </span></span>
+				<span class="data"><?php $idx=0;foreach ($variants as $name => $tmp ) :?><?php echo $idx++?',':'';?><?php echo $name;?><?php endforeach;?></span>
+			<?php endforeach;?>
+		</td>
+		<td style="text-align:right;width:30%"><div class="bl-price-variants"><?php echo $variant['price_formated'];?></div></td>
+	</tr>	
+<?php endforeach;?>
+</tbody>
+</table>
+<?php endif; ?>

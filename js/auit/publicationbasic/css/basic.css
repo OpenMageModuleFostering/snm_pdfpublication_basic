@@ -1,0 +1,136 @@
+/*
+.snm-panel .ui-helper-reset {
+	font-size:10px;
+}
+*/
+.a-loading{
+	position: relative;
+	
+}
+.a-loading:before{
+	content:"";
+	position:absolute;
+	z-index:100;
+	top:0px;
+	left:0px;
+	display: block;
+	width:30px;
+	height:30px;
+	box-sizing:border-box;
+	-webkit-box-sizing:border-box;
+	border: 2px solid #c74523;
+	border-right-color: black;
+	border-radius: 50%;
+	/*box-shadow: 0 0 10px 2px #E74F28;*/
+	-webkit-animation: a-spin 1s linear infinite;
+	-moz-animation: a-spin 1s linear infinite;
+	-ms-animation: a-spin 1s linear infinite;
+	-o-animation: a-spin 1s linear infinite;
+	animation: a-spin 1s linear infinite;
+	
+}
+@-webkit-keyframes a-spin
+{
+	from { -webkit-transform: rotate(0deg);  }
+	50%  { -webkit-transform: rotate(180deg);  }
+	to   { -webkit-transform: rotate(360deg);  }
+}
+
+@keyframes a-spin
+{
+	from { transform: rotate(0deg);   opacity: 0.2; }
+	50%  { transform: rotate(180deg); opacity: 1.0; }
+	to   { transform: rotate(360deg); opacity: 0.2; }
+}
+
+.snm-panel p.ui-widget-header {padding:5px 5px 5px 18px;cursor: move;}
+.snm-panel .ui-accordion .ui-accordion-content {padding: 1em;}
+
+.snm-panel .form label {clear: both;float:left !important;width:40%!important;padding:3px 0;color:black;}
+.snm-panel input {padding:3px;}
+.snm-panel .ui-combobox,
+.snm-panel .r {float:right;width:59%; }
+.snm-panel .ui-combobox input {display:inline-block; margin-right:-19px;width:100%;}
+/*
+.snm-panel input {float:right;width:59%; border:1px solid #ddd;margin-bottom: 5px;padding:2px 0 2px 3px;}
+.snm-panel input[type=checkbox] {width:auto; border:none;margin-bottom: 5px;float:left;margin-left:1%}
+.snm-panel .frame-select {float:right;width:59%; position:relative; margin-bottom: 5px;height:2em;}
+.snm-panel .frame-select input 	{float:none;display:block;position:absolute;width:100%; right:0px}
+.snm-panel .frame-select button 	{float:none;position:absolute; right:0px;margin: 0px;}
+.snm-panel .frame-select button 	.ui-button-text {padding:0.2em;}
+*/
+
+.snm-panel .form textarea {width:100%; border:1px solid #ddd;margin-bottom: 5px;clear:both;}
+.snm-panel .form select {float:right;width:59%; border:1px solid #ddd;margin-bottom: 5px;}
+.snm-panel .form button {margin-bottom: 5px;}
+.snm-panel .form button.small-btn .ui-button-text {padding:0 5px;}
+.snm-panel .form * {	-moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box; }
+.snm-panel .tbar {margin-top:5px; clear: both;text-align: right;}
+
+.clearfix:before, .clearfix:after { content: ""; display: table; }
+.clearfix:after {  clear: both;}
+.clearfix { zoom: 1; clear: both;}
+
+.ui-menu .ui-menuitem-link .ui-menuitem-icon {
+    position: absolute;
+    display: block;
+    height: 16px;
+    width: 16px;
+	left:4px; top:6px;
+}
+.ui-menu .ui-menu-item.seperator-bottom{
+}
+.ui-menu .ui-menu-item.seperator-bottom:after {
+	content:' ';
+	display:block;
+	border-top: 1px solid #DDDDDD;
+}
+.ui-menu .ui-menuitem-text {
+
+}
+.ui-accordion .ui-accordion-content {overflow:inherit !important;}
+
+.ui-menu .ui-menu-item a {
+	padding-left:25px;
+	position: relative;
+}
+.ui-autocomplete {
+	/*
+    padding-right: 20px;
+    */
+    overflow-y: auto;
+    overflow-x: hidden;
+	max-height: 300px;
+	z-index:20000 !important;
+}
+.ui-autocomplete-input.wait,
+.ui-autocomplete-loading {
+    background: url(../images/ajax-loader.gif) no-repeat top right;
+    background-size:17px 17px;
+}
+/** */
+
+
+.ui-button {
+	-webkit-border-fit:inherit;
+}
+
+
+.ui-combobox {
+        position: relative;
+        display: inline-block;
+    }
+    .ui-combobox-toggle {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        margin-left: -1px;
+        padding: 0;
+        /* adjust styles for IE 6/7 */
+        *height: 1.7em;
+        *top: 0.1em;
+    }
+    .ui-combobox-input {
+        margin: 0;
+        padding: 0.3em;
+    }

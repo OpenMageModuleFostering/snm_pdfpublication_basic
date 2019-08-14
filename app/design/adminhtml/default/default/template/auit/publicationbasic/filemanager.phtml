@@ -1,0 +1,46 @@
+<?php
+	$option = array(
+			'msg'=>array(
+				'm1'=>$this->__('There was an error attempting to upload the file.'),
+				'm2'=>$this->__('The upload has been canceled by the user or the browser dropped the connection.'),
+				'm10'=>$this->__('The max. upload size is : %s.',Mage::helper('auit_publicationbasic/filemanager')->getMaxUploadSize(true)),
+				'c1'=>$this->__('Refresh'),
+				'c2'=>$this->__('Add Folder'),
+				'c3'=>$this->__('Rename'),
+				'c4'=>$this->__('Delete')
+			),
+			'MaxUploadSize'=>Mage::helper('auit_publicationbasic/filemanager')->getMaxUploadSize(),
+			'Url'=>Mage::getModel('adminhtml/url')->getUrl('auit_publicationbasic/admin_filemanager/load'),
+			'formKey'=>Mage::getSingleton('core/session')->getFormKey()
+	);
+?>
+<script type="text/javascript">
+//<![CDATA[
+	if ( window.AuIt == undefined)
+		window.AuIt={};
+	AuIt.FileManagerOption=<?php echo Mage::helper('core')->jsonEncode($option);?>
+//]]>
+</script>
+<div id="snm-file-manager" title="<?php echo $this->__('File Manager');?> - <?php echo $this->__('Max. Upload Size : %s',Mage::helper('auit_publicationbasic/filemanager')->getMaxUploadSize(true));?> ">
+	<div class="snm-file-menu" >
+		<span class="rbutton ui-button ui-widget ui-state-default ui-corner-all ui-button-text-icon-primary" title="<?php echo $this->__('Upload Files');?>">
+            <span class="ui-button-icon-primary ui-icon ui-icon-image"></span>
+        	<input class="snm-file-button " type="file" multiple="multiple" id="fm_fileToUpload" onchange="AuIt.FileUpload.fileSelected();"/>
+        	<span class="ui-button-text"><?php echo $this->__('Upload Files');?></span>
+        </span>
+		<div class="snm-file-progress"><div class="snm-file-progress-percent"></div><div class="snm-file-progress-text">0%</div></div>
+        <?php /*
+		<div class="button-set">
+			<button id="fm_add_folder" class="ui-icon-folder-collapsed"><?php echo $this->__('Add Folder')?></button>
+			<button id="fm_rename" ><?php echo $this->__('Rename')?></button>
+			<button id="fm_remove" ><?php echo $this->__('Remove')?></button>
+		</div>
+*/?>
+	</div>
+	<div class="snm-file-content" >
+		<div class="snm-file-tree" >
+		</div>
+		<div class="snm-file-preview" >
+		</div>
+	</div>
+</div>

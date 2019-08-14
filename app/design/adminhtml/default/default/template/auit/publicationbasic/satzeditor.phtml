@@ -1,0 +1,179 @@
+<?php 
+
+?>
+<?php
+	$element = $this->getElement();
+?>
+<script type="text/javascript">
+//<![CDATA[
+		AuIt.SatzEditor.jsUrl='<?php echo Mage::getBaseUrl('js');?>';
+		AuIt.SatzEditor.formKey='<?php echo Mage::getSingleton('core/session')->getFormKey();?>';
+		AuIt.SatzEditor.previewUrl='<?php echo Mage::getModel('adminhtml/url')->getUrl('auit_publicationbasic/admin_preview/job');?>';
+		AuIt.SatzEditor.templateImageUrl='<?php echo Mage::helper('auit_publicationbasic/pdf')->getPreviewTemplateImageUrl('[rep]','[date]','[spread]');?>';
+		AuIt.SatzEditor.productImageUrl='<?php echo Mage::helper('auit_publicationbasic/pdf')->getPreviewProductImageUrl('[rep]');?>';
+		AuIt.SatzEditor.templateTypes=<?php echo Mage::helper('core')->jsonEncode(Mage::helper('auit_publicationbasic')->getTemplates(null,array(AuIt_PublicationBasic_Helper_Data::TEMPLATE_PRODUCT,AuIt_PublicationBasic_Helper_Data::TEMPLATE_STATIC),false));?>;
+		AuIt.SatzEditor.templateInfoUrl= '<?php echo Mage::getModel('adminhtml/url')->getUrl('auit_publicationbasic/admin_preview/info');?>';
+		AuIt.SatzEditor.save=function()
+		{
+			jQuery('#<?php echo $element->getHtmlId();?>').text(AuIt.SatzEditor.getJSON());
+			return jQuery('#<?php echo $element->getHtmlId();?>');
+		};
+		jQuery(document).ready(function(){
+		try {
+			setTimeout(function(){
+				AuIt.SatzEditor.init(<?php echo $this->getJsonObj();?>);
+			},200);
+			
+		}catch (e){
+			alert ( e.message );
+			//AuIt.Publication.init({});
+		}
+	});
+//]]>
+</script>
+
+<div id="auit-publicationbasic-satz" class="a-loading" >
+	<button data-bind='click: defaultButtonClick' style="display:none;"></button>
+	<textarea id="<?php echo $element->getHtmlId();?>" name="<?php echo $element->getName();?>" style="left:-20000px;position:absolute;"><?php echo $this->getJsonModel();?></textarea>
+	
+	<div id="auit-publicationbasic-panel" class="snm-panel " style="display:none">
+		<div class="headline"><?php echo $this->__('Print Sections');?>
+		<a  data-bind='jqueryui: {widget: "button",options: {}},click:previewData' ><?php echo $this->__('Preview');?></a>
+		</div>
+		<div class="clearfix form" style="padding:0;font-size:0.8em">
+			<label><?php echo $this->__('Style');?></label>
+			<select data-bind="combobox: jobstyle">
+				<option value="0"><?php echo $this->__('Default');?></option>
+				<?php echo Mage::helper('auit_publicationbasic')->asOptions(Mage::helper('auit_publicationbasic/style')->getCssStyles(),false);?>
+			</select>
+		</div>
+		<div class="clearfix" style="margin:5px 0 0 0">
+			<div class="trash-template" data-bind="click: onTrash"></div>
+			<button type="button" data-bind='click: copyTemplate, jqueryui: {widget: "button",options: {text: false, icons: { primary: "ui-icon-plusthick"}}}'><?php echo $this->__('Copy Spread');?></button>
+		</div>
+			
+	    <div class="clearfix template-overview" data-bind="foreach: templates, sortableList: {list:templates,conectWith:'.trash-template'}">
+	        <div class="template-box" data-bind="sortableItem: { item: $data, parentList: $parent.templates },click: activedTemplate,css:{active: isSelected($data)}" >
+				<span class="a-loading">
+					<img src="<?php  $this->getSkinUrl('images/loadinfo.gif')?>" data-bindX="attr:{src:getPrevTemplUrl()}" data-bind="setLoadingSrc:getPrevTemplUrl()"/>
+				</span>
+				<div class="info" data-bind="text:getTemplName()"></div>
+	        </div>
+		</div>
+	</div>
+	
+	<div id="auit-publicationbasic-satz-frame" style="display:none">
+	<div class="clearfix  infobox" data-bind="with:getCurrentTemplate()">
+		<div class=" c1 snm-panel">
+			<!--  
+			<img  data-bind="attr:{src:getPrevTemplUrl()}"/>
+			-->
+			<div class="clearfix form snm-panel " >
+				<div class="clearfix snm-panel ">
+					<label></label>
+					<div class="r">
+						<div style="color:#eb5e00;"><a style="text-decoration: none" target="_blank" href="http://snm-portal.com/magento-pdf-publication-templates.html"><?php echo $this->__('More Infos - FAQ')?></a></div>
+					</div>
+				</div>
+				<label><?php echo $this->__('Template');?></label>
+				<select data-bind="combobox: template">
+					<?php echo Mage::helper('auit_publicationbasic')->asOptions(Mage::helper('auit_publicationbasic')->getTemplates(null,array(AuIt_PublicationBasic_Helper_Data::TEMPLATE_PRODUCT,AuIt_PublicationBasic_Helper_Data::TEMPLATE_STATIC),false));?>
+				</select>
+				<div class="clearfix snm-panel " data-bind="if:templateInfo">
+					<label class="clearfix"><?php echo $this->__('Use Spread');?></label>
+					<select data-bind="combobox: usespread">
+						<option value="0"><?php echo $this->__('All');?></option>
+						<!-- ko foreach: templateInfo().spreads -->
+						<option data-bind="value:idx,text:name" ></option>
+						<!-- /ko -->
+						<?php /*
+						<?php echo Mage::helper('auit_publicationbasic')->asOptions(Mage::helper('auit_publicationbasic')->getUsedSpread());?>
+						*/?>
+					</select>
+					
+				</div>
+			</div>
+		</div>
+		<div class=" c2 snm-panel">
+
+			<div class="clearfix form snm-panel" data-bind="if:templateInfo">
+				<div data-bind="foreach:getCurrentVarGroups()">
+					<div data-bind="text:name" style="float:right"></div>
+					<div data-bind="foreach:tmpls">
+						<div data-bind="text:name" style="float:left"></div>
+						<div data-bind="foreach:boxs">
+							
+							<div data-bind="with: $parents[2].getVarBox($data) ">
+								<div data-bind="if: type() == 'p_free'">
+									<label data-bind="text:name"></label>
+									<input data-bind="value: def, valueUpdate: 'input'" class="r ui-widget ui-widget-content ui-corner-all"/>
+								</div>
+								<div data-bind="if: type() == 'p_img'">
+									<label style="position:relative"><span data-bind="text:name"></span>
+										<a style="position:absolute;right:2px;top:6px;" data-bind='click: selectImageFile, jqueryui: {widget: "button",options: {text: false, icons: { primary: "ui-icon-grip-dotted-horizontal"}}}'></a>
+									</label>
+									<input class="r ui-widget ui-widget-content ui-corner-all" data-bind="value: src, valueUpdate: 'input'" />
+								</div>
+							</div>
+						<?php /*
+							<!-- ko if: type() == 'p_free' -->
+							<label data-bind="text:name"></label>
+							<!--  
+							<input data-bind="value: $parents[2].getVarBoxValue($data)" class="r ui-widget ui-widget-content ui-corner-all"/>
+							
+							<input data-bind="value: def" class="r ui-widget ui-widget-content ui-corner-all"/>-->
+							<!-- /ko -->
+							<!-- ko if: type() == 'p_img' -->
+							<!-- 
+							<label ><span data-bind="text:name"></span>
+								<a style="position:absolute;right:2px;top:6px;" data-bind='click: selectImageFile, jqueryui: {widget: "button",options: {text: false, icons: { primary: "ui-icon-grip-dotted-horizontal"}}}'></a>
+							</label>
+							<input class="r ui-widget ui-widget-content ui-corner-all" data-bind="value: def" />
+							 -->
+							<!-- /ko -->
+							*/?>
+						</div>
+					</div>
+					
+				</div>
+				<!--  
+				<div data-bind="foreach:templateInfo().vars">
+					<label data-bind="text:$parent.vars[$data.uid].name"></label>
+					<input data-bind="value: $parent.vars[$data.uid].value" class="r ui-widget ui-widget-content ui-corner-all"/>
+				</div>
+				-->
+			</div>
+			
+			
+    	</div>     
+			<div class="clearfix products-overview" data-bind="foreach: products, sortableList: {list:products,conectWith:'.trash-products'}" >
+				<div class="product-box"  data-bind="sortableItem: { item: $data, parentList: $parent.products },click: $parent.activedSKUIdx,attr:{'data-index':$index()},scrollToActive:$parent.isActivedSKUIdx($index)">
+					<img  data-bind="attr:{src:$parent.getPrevProductUrl($data)}"/>
+					<span class="info" data-bind="text:$data"></span>
+				</div>
+			</div>
+    		<div class="clearfix form snm-panel" >
+					<label><?php echo $this->__('Insert Modus');?></label>
+					<div class="r" style="position: relative;">
+						<div class="trash-products" data-bind="click: onTrash"></div>
+					 	<span><?php echo $this->__('Insert at Start');?> </span><input type="radio" value="0" name="insertModus"  data-bind="checked: $root.insertModus" />
+					 	<span>&#160;<?php echo $this->__('Insert Before');?> </span><input type="radio" value="1" name="insertModus"  data-bind="checked: $root.insertModus" />
+					 	
+					 	<span>&#160;<?php echo $this->__('Insert After');?> </span><input type="radio" value="2" name="insertModus"  data-bind="checked: $root.insertModus" />
+					 	<span>&#160;<?php echo $this->__('Insert at End');?> </span><input type="radio" value="3" name="insertModus"  data-bind="checked: $root.insertModus" />
+	      			</div>
+	    			<label class="clearfix"><?php echo $this->__('SKUs');?></label>
+					<input data-bind="value: skus, valueUpdate: 'input'" class="r ui-widget ui-widget-content ui-corner-all"/>
+ 			</div>
+		</div>
+
+<div id="auit-publicationbasic-satz-productselect">
+<?php 
+			$content = Mage::getSingleton('core/layout')
+			->createBlock('auit_publicationbasic/adminhtml_jobqueue_edit_tab_products_grid');
+			$content->setId('auit_publicationbasic_catalog_skus2_content')->setElement($element);
+			echo $content->toHtml();
+?>
+</div>
+</div>
+</div>
