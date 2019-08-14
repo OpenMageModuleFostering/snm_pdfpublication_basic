@@ -356,7 +356,7 @@ class AuIt_PublicationBasic_Model_Renderer_Abstract extends Varien_Object
 				$f = $f[1];
 				$f = substr($f,0,$dec+1);
 				while ( strlen($f) < ($dec+1) )
-					$f+='0';
+					$f.='0';
 				$f = ((int)$f) / 10;
 				$f =  round($f);
 				return $f;

@@ -218,7 +218,7 @@ class AuIt_PublicationBasic_Helper_Data extends Mage_Core_Helper_Abstract
 				return;
 			}
 		}
-		Mage::getSingleton('customer/session')->setId(0);
+		//Mage::getSingleton('customer/session')->setId(0);
 	}
 	public function getProductBySku($sku,$storeId=0)
 	{
