@@ -221,5 +221,35 @@ class AuIt_PublicationBasic_Model_Jobqueue extends Mage_Core_Model_Abstract
     	} catch (Exception $e) {
     		Mage::logException($e);
     	}
-    }    
+    }
+    public function createDataSheet($sku,$storeId)
+    {
+    	$pdfPublication = Mage::getModel('auit_publicationbasic/renderer_pdf');
+    	$firstTemplate=true;
+    	foreach ( $this->getTemplates() as $template )
+    	{
+    		$template = new Varien_Object($template);
+    		$pdfPublication->setCurrentJobTemplate($template);
+    		$model = Mage::getModel('auit_publicationbasic/template')->load($template->getTemplate());
+    		if ( $model->getId() )
+    		{
+    			$data = Mage::helper('core')->jsonDecode($model->getData('data'));
+    			$skus = $template->getSkus();
+    			if (  $firstTemplate )
+    			{
+    				$firstTemplate=false;
+    				$s = explode(',',$skus);
+    				array_shift($s);
+    				array_unshift($s,$sku);
+    				$skus = implode(',', $s);
+    			}
+    			$data['preview_sku']=$skus;
+    			$data['preview_store']=$storeId;
+    			$pdfPublication->renderData($data,$this);
+    		}
+    	}
+    	$pdfPublication->setCurrentJobTemplate(null);
+    	return $pdfPublication->getPdfStream();
+    }
+    
 }

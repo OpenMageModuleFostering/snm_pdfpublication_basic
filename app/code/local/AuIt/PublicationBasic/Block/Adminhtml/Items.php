@@ -85,12 +85,23 @@ class AuIt_PublicationBasic_Block_Adminhtml_Items extends Mage_Adminhtml_Block_S
         if($columnName != 'template' )
         	return parent::_renderCellTemplate($columnName);
         
-        $sets = Mage::helper('auit_publicationbasic')->getTemplatesForType(AuIt_PublicationBasic_Helper_Data::TEMPLATE_PRODUCT);
         $rendered = '<select name="'.$inputName.'" style="'.$column['style'].'">';
+        $sets = Mage::helper('auit_publicationbasic')->getJobTemplates();
+        
+        $rendered .='<optgroup label="'.Mage::helper('auit_publicationbasic')->__('Job Defintion').'">';
+        foreach ( $sets as $item )
+        {
+        	$rendered .= '<option value="'.$item['value'].'">'.htmlentities($item['label'],ENT_QUOTES).'</option>';
+        }
+        $rendered .='</optgroup>';
+        
+        $sets = Mage::helper('auit_publicationbasic')->getTemplatesForType(AuIt_PublicationBasic_Helper_Data::TEMPLATE_PRODUCT);
+        $rendered .='<optgroup label="'.Mage::helper('auit_publicationbasic')->__('Basic Templates').'">';
     	foreach ( $sets as $item )
     	{
         	$rendered .= '<option value="'.$item['value'].'">'.htmlentities($item['label'],ENT_QUOTES).'</option>';
     	}
+    	$rendered .='</optgroup>';
 		$rendered .= '</select>';
         return $rendered;
     } 	

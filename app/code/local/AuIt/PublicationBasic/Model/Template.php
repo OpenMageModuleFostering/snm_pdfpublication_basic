@@ -346,4 +346,14 @@ class AuIt_PublicationBasic_Model_Template extends Mage_Core_Model_Abstract
     		unset($templdata['template_id']);
     	$this->addData($templdata);
     }
+    public function createDataSheet($sku,$storeId)
+    {
+    	$data = Mage::helper('core')->jsonDecode($this->getData('data'));
+    	$data['preview_store']=$storeId;
+    	$data['preview_sku']=$sku;
+    	$pdfPublication = Mage::getModel('auit_publicationbasic/renderer_pdf');
+    	return $pdfPublication->getPdfFromData('preview',$data)->render();
+    }
+    
+    
  }

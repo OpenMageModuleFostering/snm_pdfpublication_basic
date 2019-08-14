@@ -50,7 +50,7 @@ class AuIt_PublicationBasic_Model_Renderer_Pdf extends AuIt_PublicationBasic_Mod
 	protected function endSpread($data,$spread){
 		
 	}
-	protected function renderData($data,$jobQueue=null)
+	public function renderData($data,$jobQueue=null)
 	{
 		if  ( $jobQueue )
 		{
@@ -109,6 +109,10 @@ class AuIt_PublicationBasic_Model_Renderer_Pdf extends AuIt_PublicationBasic_Mod
 		}
 		
 		$this->_currentJobTemplate=null;
+	}
+	public function getPdfStream()
+	{
+		return $this->_tcpdf->Output('', 'S');
 	}
 	public function getPdfFromJobData($printMode,$jobQueue)
 	{	

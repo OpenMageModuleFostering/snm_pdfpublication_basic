@@ -21,7 +21,10 @@ class AuIt_PublicationBasic_Model_Renderer_Abstract extends Varien_Object
 			@unlink($file);
 		$this->_barcodes=array();
 	}
-	
+	public function setCurrentJobTemplate($templ)
+	{
+		$this->_currentJobTemplate=$templ;
+	}
 	protected function _getJobQueueVar($blockInfo,$name)
 	{
 		if ( $this->_currentJobTemplate )

@@ -14,7 +14,6 @@ class AuIt_PublicationBasic_ContentController extends Mage_Core_Controller_Front
     }
     public function datasheetAction()
     {
-    	$pdfPublication = Mage::getModel('auit_publicationbasic/renderer_pdf');
     	try {
 	    	if ( ($sku = base64_decode($this->getRequest()->getParam('skub64')) )  
 	    			||
@@ -26,34 +25,66 @@ class AuIt_PublicationBasic_ContentController extends Mage_Core_Controller_Front
 	    		$pid = $_product->getIdBySku($sku);
 	    		if ( $pid )
 	    			$_product->load($pid);
-	    		$model = null;
-	    		$tuid= $this->getRequest()->getParam('tuid');
+
+	    		$toName = 'product_info_'.$sku.'.pdf';
+	    		$directory = Mage::getBaseDir('media') . DS.'catalog'.DS.'product'.DS.'cache'.DS.'_snm_publication_previews'.DS;
+	    		$path = $directory.$toName;
 	    		
-	    		if ( $tuid )
+	    		if ( !Mage::getStoreConfigFlag('auit_publicationbasic/product_pdf/use_cache') || !file_exists($path) || filemtime($path) < strtotime($_product->getUpdatedAt()))
 	    		{
-	    			$model = Mage::getModel('auit_publicationbasic/template')->load($tuid,'identifier');
-	    			if ( !$model->getId() )
-	    				$model=null;
-	    		}
-	    		if ( !$model )
-	    		{
-		    		$tid= (int)$this->getRequest()->getParam('tid');
-		    		if ( !$tid ){
-		    			$tid = Mage::helper('auit_publicationbasic/pdf')->getDataSheetTemplateId($_product);
+	    			$io = new Varien_Io_File();
+	    			if ( !$io->isWriteable(dirname($path)) && !$io->mkdir(dirname($path), 0777, true)) {
+	    				$msg = Mage::helper('catalog')->__("Cannot create writeable directory '%s'.", $path);
+	    				Mage::log($msg );
+	    				Mage::getSingleton('adminhtml/session')->addError($msg );
+	    				$this->_forward('noRoute');
+	    				return;
+	    			}
+	    		 
+		    		$model = null;
+		    		$tuid= $this->getRequest()->getParam('tuid');
+		    		if ( $tuid )
+		    		{
+		    			if ( $tuid[0] == 'J')
+		    			{
+		    				$model = Mage::getModel('auit_publicationbasic/jobqueue')->load(substr($tuid,1));
+		    				if ( !$model->getId() )
+		    					$model=null;
+		    			}else {	
+			    			$model = Mage::getModel('auit_publicationbasic/template')->load($tuid,'identifier');
+			    			if ( !$model->getId() )
+			    				$model=null;
+		    			}
 		    		}
-	    			$model = Mage::getModel('auit_publicationbasic/template')->load($tid);
-	    		}	
-	    		if ( $model->getId() )
+		    		if ( !$model )
+		    		{
+			    		$tid= (int)$this->getRequest()->getParam('tid');
+			    		if ( !$tid ){
+			    			$tid = Mage::helper('auit_publicationbasic/pdf')->getDataSheetTemplateId($_product);
+			    		}
+			    		if ( $tid && $tid[0] == 'J')
+			    		{
+			    			$model = Mage::getModel('auit_publicationbasic/jobqueue')->load(substr($tid,1));
+			    		}else {
+			    			$model = Mage::getModel('auit_publicationbasic/template')->load($tid);
+			    		}
+		    		}	
+		    		if ( $model->getId() )
+		    		{
+		    			file_put_contents($path, $model->createDataSheet($sku,Mage::app()->getStore()->getId()));
+		    		}
+	    		}
+	    		if ( file_exists($path) )
 	    		{
-	    			$data = Mage::helper('core')->jsonDecode($model->getData('data'));
-	    			$data['preview_store']=Mage::app()->getStore()->getId();
-	    			$data['preview_sku']=$sku;
-		    		$pdf = $pdfPublication->getPdfFromData('preview',$data);
-		    		$this->_prepareDownloadResponse('preview_'.Mage::getSingleton('core/date')->date('Y-m-d_H-i-s').'.pdf', $pdf->render(), 'application/pdf');
-					$this->_sendResponse();
-					exit;
+	    			$this->_prepareDownloadResponse($toName, file_get_contents($path), 'application/pdf');
+	    			$this->_sendResponse();
+	    			exit();
+//	    			$directory = Mage::getBaseUrl('media') . DS.'catalog'.DS.'product'.DS.'cache'.DS.'_snm_publication_previews'.DS;
+	//    			$path = $directory.$toName;
+	  //  			$this->getResponse()->setRedirect($path);
 	    			return;
 	    		}
+	    		 
 	    	}
     	}
     	catch ( Exception $e )

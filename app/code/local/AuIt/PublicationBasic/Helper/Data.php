@@ -486,6 +486,18 @@ class AuIt_PublicationBasic_Helper_Data extends Mage_Core_Helper_Abstract
 		}
 		return $options;
 	}
+	public function getJobTemplates($type=AuIt_PublicationBasic_Model_Jobqueue::TYPE_BROCHURE_LIST)
+	{
+		$collection = Mage::getResourceModel('auit_publicationbasic/jobqueue_collection')
+		->addFieldToFilter('variante',$type)
+		->addFieldToFilter('prio',array('gt'=>0));
+		$options = array();
+		foreach ($collection as $item )
+		{
+			$options[] = array('value' => 'J'.$item->getId(), 'label' => $item->getName());
+		}
+		return $options;
+	}
 	public function getTemplatesForType($type,$badd=false,$bhash=false)
 	{
 	//	as ass

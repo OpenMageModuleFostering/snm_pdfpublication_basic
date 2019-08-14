@@ -2,7 +2,7 @@
 <config>
 	<modules>
 		<AuIt_PublicationBasic>
-			<version>1.8.0.6</version>
+			<version>1.8.2</version>
 		</AuIt_PublicationBasic>
 	</modules>
 	<frontend>
@@ -185,6 +185,9 @@
                 <error_email_identity>general</error_email_identity>
                 <error_email_template>auit_layout_crontab_error_email_template</error_email_template>
 			</crontab>
+			<product_pdf>
+				<use_cache>0</use_cache>
+			</product_pdf>
 		</auit_publicationbasic>
 	</default>	
 	
