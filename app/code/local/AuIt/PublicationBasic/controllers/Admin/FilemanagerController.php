@@ -40,9 +40,12 @@ class AuIt_PublicationBasic_Admin_FilemanagerController extends Mage_Adminhtml_C
     	catch ( Exception $e )
     	{
     		Mage::log("AuIt_PublicationBasic_Admin_FilemanagerController::Exception - ".$e->getMessage());
+    		$this->getResponse()->clearAllHeaders();
     		$this->getResponse()->setHeader('Content-type', 'application/json; charset=UTF-8');
     		$this->getResponse()->setBody(Zend_Json::encode(array('status'=>0,'error'=>$e->getMessage())));
-    		return;
+	    	$this->getResponse()->sendResponse();
+	    	exit();
+	    	return;
     	}
     }
     static function _toByteString($size)
@@ -113,9 +116,12 @@ class AuIt_PublicationBasic_Admin_FilemanagerController extends Mage_Adminhtml_C
     		$child['data']='MEDIA';
     		$child['children']=array();
     		$jsonArray[] = $child;
+    		$this->getResponse()->clearAllHeaders();
     		$this->getResponse()->setHeader('Content-type', 'application/json; charset=UTF-8');
     		$this->getResponse()->setBody(Zend_Json::encode($jsonArray));
-			return;
+	    	$this->getResponse()->sendResponse();
+	    	exit();
+	    	return;
     	}
 
     	$filter = '';
@@ -134,8 +140,11 @@ class AuIt_PublicationBasic_Admin_FilemanagerController extends Mage_Adminhtml_C
     			$jsonArray[] = $child;
     		}
     	}
-		$this->getResponse()->setHeader('Content-type', 'application/json; charset=UTF-8');
+    	$this->getResponse()->clearAllHeaders();
+    	$this->getResponse()->setHeader('Content-type', 'application/json; charset=UTF-8');
     	$this->getResponse()->setBody(Zend_Json::encode($jsonArray));
+    	$this->getResponse()->sendResponse();
+	    	exit();
     }
     protected  function _create_node()
     {
@@ -151,8 +160,11 @@ class AuIt_PublicationBasic_Admin_FilemanagerController extends Mage_Adminhtml_C
 				$status=1;
 			}
 		}
+    	$this->getResponse()->clearAllHeaders();
 		$this->getResponse()->setHeader('Content-type', 'application/json; charset=UTF-8');
 		$this->getResponse()->setBody(Zend_Json::encode(array('status'=>$status,'id'=>$id)));
+    	$this->getResponse()->sendResponse();
+	    	exit();
     }
     protected  function _rename_node()
     {
@@ -166,8 +178,11 @@ class AuIt_PublicationBasic_Admin_FilemanagerController extends Mage_Adminhtml_C
     		$id = $helper->convertPathToId($newPath);
     		$status=1;
 		}
+    	$this->getResponse()->clearAllHeaders();
 		$this->getResponse()->setHeader('Content-type', 'application/json; charset=UTF-8');
 		$this->getResponse()->setBody(Zend_Json::encode(array('status'=>$status,'id'=>$id)));
+	    $this->getResponse()->sendResponse();
+	    	exit();
     }
     protected  function _remove_node()
     {
@@ -176,8 +191,11 @@ class AuIt_PublicationBasic_Admin_FilemanagerController extends Mage_Adminhtml_C
 		if ( is_dir($path) )
 			$helper->getStorage()->deleteDirectory($helper->getCurrentPath());
 		$status=1;$id=0;
+    	$this->getResponse()->clearAllHeaders();
 		$this->getResponse()->setHeader('Content-type', 'application/json; charset=UTF-8');
 		$this->getResponse()->setBody(Zend_Json::encode(array('status'=>$status,'id'=>$id)));
+    	$this->getResponse()->sendResponse();
+	    	exit();
     }
     protected  function _upload_default()
     {
@@ -190,8 +208,11 @@ class AuIt_PublicationBasic_Admin_FilemanagerController extends Mage_Adminhtml_C
 			$result = $helper->getStorage()->uploadFile($path,$type);
 			$status=1;$id=0;
 		}
+    	$this->getResponse()->clearAllHeaders();
 		$this->getResponse()->setHeader('Content-type', 'application/json; charset=UTF-8');
 		$this->getResponse()->setBody(Zend_Json::encode(array('status'=>$status,'id'=>$id)));
+    	$this->getResponse()->sendResponse();
+	    	exit();
     }
 
     protected  function _search()
@@ -212,7 +233,14 @@ class AuIt_PublicationBasic_Admin_FilemanagerController extends Mage_Adminhtml_C
     			$result[]='#'.$helper->urlEncode($full);
     		}
     	}
-		$this->getResponse()->setHeader('Content-type', 'application/json; charset=UTF-8');
+    	$this->getResponse()->clearAllHeaders();
+    	$this->getResponse()->setHeader('Content-type', 'application/json; charset=UTF-8');
 		$this->getResponse()->setBody(Zend_Json::encode($result));
+    	$this->getResponse()->sendResponse();
+	    	exit();
+    }
+    protected function _isAllowed()
+    {
+    	return true;
     }
 }

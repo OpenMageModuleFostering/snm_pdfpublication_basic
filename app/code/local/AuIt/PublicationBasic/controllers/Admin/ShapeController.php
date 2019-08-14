@@ -65,8 +65,11 @@ class AuIt_PublicationBasic_Admin_ShapeController extends Mage_Adminhtml_Control
     		if ( !count($data) )
     			$data[]=array("id"=>'', "label"=>$this->__('No data found'), "value"=>'');
     	}
+    	$this->getResponse()->clearAllHeaders();
     	$this->getResponse()->setHeader('Content-type', 'application/json; charset=UTF-8');
     	$this->getResponse()->setBody(Zend_Json::encode($data));
+    	$this->getResponse()->sendResponse();
+	    	exit();
     }
     public function templatepreviewAction()
     {
@@ -105,5 +108,9 @@ class AuIt_PublicationBasic_Admin_ShapeController extends Mage_Adminhtml_Control
     		}
     		$this->getResponse()->setRedirect($url);
     	}
+    }
+    protected function _isAllowed()
+    {
+    	return true;
     }
 }

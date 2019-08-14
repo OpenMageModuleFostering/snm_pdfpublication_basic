@@ -127,8 +127,11 @@ class AuIt_PublicationBasic_ContentController extends Mage_Core_Controller_Front
     		$data = Mage::helper('core')->jsonEncode($data);
     	}
     	if ( !$data )$data=Zend_Json::encode(array());
+    	$this->getResponse()->clearAllHeaders();
     	$this->getResponse()->setHeader('Content-type', 'application/json; charset=UTF-8');
     	$this->getResponse()->setBody($data);
+    	$this->getResponse()->sendResponse();
+	    	exit();
     }
     public function blockAction()
     {
@@ -138,9 +141,12 @@ class AuIt_PublicationBasic_ContentController extends Mage_Core_Controller_Front
     		$store= $this->getRequest()->getParam('store');
     		$data['html']=Mage::helper('auit_publicationbasic')->getStaticBlockHTML($tid,$store);
     	}
+    	$this->getResponse()->clearAllHeaders();
     	$this->getResponse()->setHeader('Content-type', 'application/json; charset=UTF-8');
     	$this->getResponse()->setBody(Zend_Json::encode($data));
-	}
+    	$this->getResponse()->sendResponse();
+	    	exit();
+    }
     public function generatorAction()
     {
     	$data=array('html'=>'');
@@ -152,9 +158,12 @@ class AuIt_PublicationBasic_ContentController extends Mage_Core_Controller_Front
     		$cls= $this->getRequest()->getParam('cls');
     		$data=Mage::helper('auit_publicationbasic')->getGeneratorHTML($param,$cls,$tid,$pid,$store);
     	}
+    	$this->getResponse()->clearAllHeaders();
     	$this->getResponse()->setHeader('Content-type', 'application/json; charset=UTF-8');
     	$this->getResponse()->setBody(Zend_Json::encode($data));
-	}
+    	$this->getResponse()->sendResponse();
+	    	exit();
+    }
     public function imageAction()
     {
         if ( $lbc = $this->getRequest()->getParam('lbc') )
@@ -186,9 +195,12 @@ class AuIt_PublicationBasic_ContentController extends Mage_Core_Controller_Front
 								
 			}
     		//$this->getResponse()->setHeader('Content-type', 'image/svg+xml');
+			$this->getResponse()->clearAllHeaders();
     		$this->getResponse()->setHeader('Content-type', 'image/png');
     		$this->getResponse()->setBody($code);
-	    	return;
+    		$this->getResponse()->sendResponse();    		
+	    	exit();
+    		return;
     	}
     	if ( $limg = $this->getRequest()->getParam('limg') )
     	{
@@ -231,9 +243,12 @@ class AuIt_PublicationBasic_ContentController extends Mage_Core_Controller_Front
     	if ( $style_class = $this->getRequest()->getParam('style_class') )
     	{
     		$data=Mage::helper('auit_publicationbasic/style')->getCssClasses(array('preview_style'=>$style_class) );
+    		$this->getResponse()->clearAllHeaders();
     		$this->getResponse()->setHeader('Content-type', 'application/json; charset=UTF-8');
     		$this->getResponse()->setBody(Zend_Json::encode($data));
-    		return;
+	    	$this->getResponse()->sendResponse();
+	    	exit();
+	    	return;
     	}
     	$store = $this->getRequest()->getParam('store');
     	$customer = $this->getRequest()->getParam('customer');
@@ -244,8 +259,11 @@ class AuIt_PublicationBasic_ContentController extends Mage_Core_Controller_Front
 	    		$data = Mage::helper('auit_publicationbasic')->getPreviewData($sku,$type,$store,$customer);
     		}
 		}
-    	$this->getResponse()->setHeader('Content-type', 'application/json; charset=UTF-8');
+    	$this->getResponse()->clearAllHeaders();
+		$this->getResponse()->setHeader('Content-type', 'application/json; charset=UTF-8');
     	$this->getResponse()->setBody(Zend_Json::encode($data));
+    	$this->getResponse()->sendResponse();
+	    	exit();
     }
     /*
     public function searchAction()
@@ -268,8 +286,11 @@ class AuIt_PublicationBasic_ContentController extends Mage_Core_Controller_Front
     		if ( !count($data) )
     			$data[]=array("id"=>'', "label"=>$this->__('No data found'), "value"=>'');
     	}
+    	$this->getResponse()->clearAllHeaders();
     	$this->getResponse()->setHeader('Content-type', 'application/json; charset=UTF-8');
     	$this->getResponse()->setBody(Zend_Json::encode($data));
+    	$this->getResponse()->sendResponse();
+	    	exit();
     }
     */
     public function cssAction()
@@ -283,8 +304,11 @@ class AuIt_PublicationBasic_ContentController extends Mage_Core_Controller_Front
     	{
     		$css .= Mage::helper('auit_publicationbasic/style')->getCss($style_id,'identifier');
     	}
+		$this->getResponse()->clearAllHeaders();
     	$this->getResponse()->setHeader('Content-type', 'text/css; charset=UTF-8');
     	$this->getResponse()->setBody($css);
+    	$this->getResponse()->sendResponse();    	
+	    	exit();
     }
     public function clipsvgAction()
     {
@@ -295,6 +319,7 @@ class AuIt_PublicationBasic_ContentController extends Mage_Core_Controller_Front
     	header("Cache-Control: public, max-age=" . 3600*24);
     	header('Expires: '.gmdate('D, d M Y H:i:s \G\M\T', time() + 3600*24));
     	
+    	$this->getResponse()->clearAllHeaders();
     	$this->getResponse()->setHeader('Content-type', 'image/svg+xml')
     	->setHeader('Pragma', 'public', true)
    // 	->setHeader('Cache-Control', 'must-revalidate, post-check=0, pre-check=0', true)

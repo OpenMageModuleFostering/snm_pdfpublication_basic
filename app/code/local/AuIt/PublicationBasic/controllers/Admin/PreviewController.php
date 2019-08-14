@@ -90,8 +90,11 @@ class AuIt_PublicationBasic_Admin_PreviewController extends Mage_Adminhtml_Contr
     		if ( !count($data) )
     			$data[]=array("id"=>'', "label"=>$this->__('No data found'), "value"=>'');
     	}
+    	$this->getResponse()->clearAllHeaders();
     	$this->getResponse()->setHeader('Content-type', 'application/json; charset=UTF-8');
     	$this->getResponse()->setBody(Zend_Json::encode($data));
+    	$this->getResponse()->sendResponse();
+	    	exit();
     }
     public function productpreviewAction()
     {
@@ -163,12 +166,15 @@ class AuIt_PublicationBasic_Admin_PreviewController extends Mage_Adminhtml_Contr
     	} catch ( Exception $e ) {
     			
     		Mage::log ( "AuIt_PublicationBasic_Admin_TemplatesController::Exception - " . $e->getMessage () );
+    		$this->getResponse()->clearAllHeaders();
     		$this->getResponse ()->setHeader ( 'Content-type', 'application/json; charset=UTF-8' );
     		$this->getResponse ()->setBody ( Zend_Json::encode ( array (
     				'status' => 0,
     				'error' => $e->getMessage ()
     		) ) );
-    		return;
+	    	$this->getResponse()->sendResponse();
+	    	exit();
+	    	return;
     	}
     }
     protected function _staticvariables()
@@ -180,8 +186,15 @@ class AuIt_PublicationBasic_Admin_PreviewController extends Mage_Adminhtml_Contr
     	{
     		$data = $model->buildObjectList();
     	}
+    	$this->getResponse()->clearAllHeaders();
     	$this->getResponse()->setHeader('Content-type', 'application/json; charset=UTF-8');
     	$this->getResponse()->setBody(Zend_Json::encode($data));
+    	$this->getResponse()->sendResponse();
+	    	exit();
+    }
+    protected function _isAllowed()
+    {
+    	return true;
     }
     
 }
