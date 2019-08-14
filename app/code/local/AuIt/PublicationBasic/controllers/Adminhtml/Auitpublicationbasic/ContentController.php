@@ -1,5 +1,5 @@
 <?php
-class AuIt_PublicationBasic_ContentController extends Mage_Core_Controller_Front_Action
+class AuIt_PublicationBasic_Adminhtml_Auitpublicationbasic_ContentController extends Mage_Adminhtml_Controller_Action
 {
     /**
      * Index action
@@ -26,9 +26,10 @@ class AuIt_PublicationBasic_ContentController extends Mage_Core_Controller_Front
 	    		$pid = $_product->getIdBySku($sku);
 	    		if ( $pid )
 	    			$_product->load($pid);
-	    			*/
-	    		$_product = Mage::helper('auit_publicationbasic')->getProductBySku($sku,Mage::app()->getStore()->getId());	    		
-
+*/
+	    		$_product = Mage::helper('auit_publicationbasic')->getProductBySku($sku,Mage::app()->getStore()->getId());
+	    		
+	    		
 	    		$toName = 'product_info_'.$sku.'.pdf';
 	    		$directory = Mage::getBaseDir('media') . DS.'catalog'.DS.'product'.DS.'cache'.DS.'_snm_publication_previews'.DS;
 	    		$path = $directory.$toName;

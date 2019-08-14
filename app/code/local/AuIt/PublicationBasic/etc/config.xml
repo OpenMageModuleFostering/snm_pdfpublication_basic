@@ -2,7 +2,7 @@
 <config>
 	<modules>
 		<AuIt_PublicationBasic>
-			<version>1.9.5</version>
+			<version>1.9.7</version>
 		</AuIt_PublicationBasic>
 	</modules>
 	<frontend>

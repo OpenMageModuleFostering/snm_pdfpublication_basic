@@ -220,6 +220,20 @@ class AuIt_PublicationBasic_Helper_Data extends Mage_Core_Helper_Abstract
 		}
 		Mage::getSingleton('customer/session')->setId(0);
 	}
+	public function getProductBySku($sku,$storeId=0)
+	{
+		$_product = Mage::getModel('catalog/product');
+		$collection = $_product->getResourceCollection();
+		$selection  = $collection->getSelect();
+		$selection->reset('where');
+		$collection->addFieldToFilter('sku', (string)$sku);
+		foreach ( $collection as $p )
+		{
+			$_product->load($p->getId());
+			break;
+		}
+		return $_product;
+	}
 	public function getPreviewDataFromStore($sku,$type,$storeId=0,$customerId=0)
 	{
 		$lsku = $sku;
@@ -311,11 +325,12 @@ class AuIt_PublicationBasic_Helper_Data extends Mage_Core_Helper_Abstract
 		if ( Mage::registry('product'))
 			Mage::unregister('product');
 		
-		$_product = Mage::getModel('catalog/product');
-		$_product->setStoreId(Mage::app()->getStore()->getId());
-		$pid = $_product->getIdBySku($pid);
-		if ( $pid )
-			$_product->load($pid);
+//		$_product = Mage::getModel('catalog/product');
+	//	$_product->setStoreId(Mage::app()->getStore()->getId());
+		$_product = Mage::helper('auit_publicationbasic')->getProductBySku($pid,Mage::app()->getStore()->getId());
+//		$pid = $_product->getIdBySku($pid);
+	//	if ( $pid )
+		//	$_product->load($pid);
 		Mage::register('product',$_product);
 		
 		$block = Mage::getSingleton('core/layout')->createBlock('auit_publicationbasic/generator')
