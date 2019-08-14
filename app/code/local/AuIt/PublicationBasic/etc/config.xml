@@ -2,7 +2,7 @@
 <config>
 	<modules>
 		<AuIt_PublicationBasic>
-			<version>1.9.4</version>
+			<version>1.9.5</version>
 		</AuIt_PublicationBasic>
 	</modules>
 	<frontend>
@@ -18,7 +18,7 @@
                 <use>standard</use>
                 <args>
                     <module>AuIt_PublicationBasic</module>
-                    <frontName>publication</frontName>
+                    <frontName>auit_publicationbasic</frontName>
                 </args>
             </auit_publicationbasic>
         </routers>
@@ -79,17 +79,18 @@
             </admin_system_config_changed_section_auit_publicationbasic>
         </events>
 	</global>
-	<admin>
-		<routers>
-			<auit_publicationbasic>
-				<use>admin</use>
-				<args>
-					<module>AuIt_PublicationBasic</module>
-					<frontName>auit_publicationbasic</frontName>
-				</args>
-			</auit_publicationbasic>
-		</routers>
-	</admin>
+    <admin>
+        <routers>
+            <adminhtml>
+                <args>
+                    <modules>
+                    	<auit_publicationbasic before="Mage_Adminhtml">AuIt_PublicationBasic_Adminhtml</auit_publicationbasic>
+                    </modules>
+                </args>
+            </adminhtml>
+        </routers>
+    </admin>
+	
 	<adminhtml>
 		<translate>
 			<modules>

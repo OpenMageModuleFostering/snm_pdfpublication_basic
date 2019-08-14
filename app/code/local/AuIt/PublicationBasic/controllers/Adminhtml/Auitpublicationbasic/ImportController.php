@@ -1,5 +1,5 @@
 <?php
-class AuIt_PublicationBasic_Admin_ImportController extends Mage_Adminhtml_Controller_Action
+class AuIt_PublicationBasic_Adminhtml_Auitpublicationbasic_ImportController extends Mage_Adminhtml_Controller_Action
 {
     protected function _construct()
     {

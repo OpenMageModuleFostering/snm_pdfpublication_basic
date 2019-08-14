@@ -1,6 +1,16 @@
 <?xml version="1.0"?>
 <history>
 	<version>
+		<number>1.9.5</number>
+		<date>2015-01-14</date>
+		<channel>allPublication</channel>
+		<comment></comment>
+		<features><![CDATA[
+		Fix for patch SUPEE-6788 
+		]]></features>
+		<fixes><![CDATA[]]></fixes>
+	</version>
+	<version>
 		<number>1.9.4</number>
 		<date>2015-07-10</date>
 		<channel>allPublication</channel>

@@ -8,11 +8,11 @@
 //<![CDATA[
 		AuIt.SatzEditor.jsUrl='<?php echo Mage::getBaseUrl('js');?>';
 		AuIt.SatzEditor.formKey='<?php echo Mage::getSingleton('core/session')->getFormKey();?>';
-		AuIt.SatzEditor.previewUrl='<?php echo Mage::getModel('adminhtml/url')->getUrl('auit_publicationbasic/admin_preview/job');?>';
+		AuIt.SatzEditor.previewUrl='<?php echo Mage::getModel('adminhtml/url')->getUrl('adminhtml/auitpublicationbasic_preview/job');?>';
 		AuIt.SatzEditor.templateImageUrl='<?php echo Mage::helper('auit_publicationbasic/pdf')->getPreviewTemplateImageUrl('[rep]','[date]','[spread]');?>';
 		AuIt.SatzEditor.productImageUrl='<?php echo Mage::helper('auit_publicationbasic/pdf')->getPreviewProductImageUrl('[rep]');?>';
 		AuIt.SatzEditor.templateTypes=<?php echo Mage::helper('core')->jsonEncode(Mage::helper('auit_publicationbasic')->getTemplates(null,array(AuIt_PublicationBasic_Helper_Data::TEMPLATE_PRODUCT,AuIt_PublicationBasic_Helper_Data::TEMPLATE_STATIC),false));?>;
-		AuIt.SatzEditor.templateInfoUrl= '<?php echo Mage::getModel('adminhtml/url')->getUrl('auit_publicationbasic/admin_preview/info');?>';
+		AuIt.SatzEditor.templateInfoUrl= '<?php echo Mage::getModel('adminhtml/url')->getUrl('adminhtml/auitpublicationbasic_preview/info');?>';
 		AuIt.SatzEditor.save=function()
 		{
 			jQuery('#<?php echo $element->getHtmlId();?>').text(AuIt.SatzEditor.getJSON());

@@ -1,6 +1,6 @@
 <?php
 // https://github.com/kschroeder/Magento-ZendServer-JobQueue
-class AuIt_PublicationBasic_Admin_JobqueueController extends Mage_Adminhtml_Controller_Action
+class AuIt_PublicationBasic_Adminhtml_Auitpublicationbasic_JobqueueController extends Mage_Adminhtml_Controller_Action
 {
     protected function _initAction()
     {

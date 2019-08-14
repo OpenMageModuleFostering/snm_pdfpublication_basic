@@ -110,18 +110,18 @@ class AuIt_PublicationBasic_Helper_Pdf extends Mage_Core_Helper_Abstract
 	public function getPreviewProductImageUrl($productId)
 	{
 		$update_time = time();
-		return Mage::getModel('adminhtml/url')->getUrl('auit_publicationbasic/admin_preview/productpreview',array('tid'=>$productId,'upd'=>$update_time));
+		return Mage::getModel('adminhtml/url')->getUrl('adminhtml/auitpublicationbasic_preview/productpreview',array('tid'=>$productId,'upd'=>$update_time));
 	}
 	public function getPreviewTemplateImageUrl($templateId,$update_time,$spread=1)
 	{
 		if ( $update_time != '[date]' )
 			$update_time = strtotime ($update_time);
-		return Mage::getModel('adminhtml/url')->getUrl('auit_publicationbasic/admin_preview/templatepreview',array('tid'=>$templateId,'upd'=>$update_time,'spread'=>$spread));
+		return Mage::getModel('adminhtml/url')->getUrl('adminhtml/auitpublicationbasic_preview/templatepreview',array('tid'=>$templateId,'upd'=>$update_time,'spread'=>$spread));
 	}
 	public function getPreviewJobImageUrl($jobId)
 	{
 		$update_time = time();
-		return Mage::getModel('adminhtml/url')->getUrl('auit_publicationbasic/admin_preview/templatepreview',array('jid'=>$jobId,'upd'=>$update_time));
+		return Mage::getModel('adminhtml/url')->getUrl('adminhtml/auitpublicationbasic_preview/templatepreview',array('jid'=>$jobId,'upd'=>$update_time));
 	}
 	public function getPreviewImage($templateId,$update_time,$asThumb=true,$spread=0)
 	{

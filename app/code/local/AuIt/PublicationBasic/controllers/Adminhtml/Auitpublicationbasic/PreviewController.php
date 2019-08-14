@@ -1,5 +1,5 @@
 <?php
-class AuIt_PublicationBasic_Admin_PreviewController extends Mage_Adminhtml_Controller_Action
+class AuIt_PublicationBasic_Adminhtml_Auitpublicationbasic_PreviewController extends Mage_Adminhtml_Controller_Action
 {
     /**
      * Index action

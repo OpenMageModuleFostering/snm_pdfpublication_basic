@@ -85,8 +85,8 @@ class AuIt_PublicationBasic_Block_Adminhtml_Satzeditor extends Mage_Adminhtml_Bl
 			$options=array(
 					'gen_params'=>$genParams,
 					'attributes'=>Mage::helper('auit_publicationbasic')->getAttributes($this->isTemplate(),$this->getTemplateType()),
-					'searchurl'=>Mage::getModel('adminhtml/url')->getUrl('auit_publicationbasic/admin_preview/search'),
-					'styleurl'=>Mage::getModel('adminhtml/url')->getUrl('auit_publicationbasic/admin_styles/edit'),
+					'searchurl'=>Mage::getModel('adminhtml/url')->getUrl(''adminhtml/auitpublicationbasic_preview/search'),
+					'styleurl'=>Mage::getModel('adminhtml/url')->getUrl(''adminhtml/auitpublicationbasic_styles/edit'),
 					'dataurl'=>$this->getUrl('auit_publicationbasic/content/data'),
 					'templurl'=>$this->getUrl('auit_publicationbasic/content/templ'),
 					'generatorurl'=>$this->getUrl('auit_publicationbasic/content/generator'),
